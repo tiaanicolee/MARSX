@@ -1,9 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MARSX",
+  "name": "Middleware for Assisting the Registration of Samples ",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "MarsLogo.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }

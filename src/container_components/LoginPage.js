@@ -6,39 +6,39 @@ import './LoginPage.css'
 
 
 /**
- * this componnent allows the user to login with
+ * this component allows the user to login with
  * their GeoPass login
  */
 class LoginPage extends Component{
     constructor(){
-        super()
+        super();
         this.state = {
             user: {
                 username: '',
                 password: ''
             }
-        }
+        };
        this.login = this.login.bind(this)
     }
 
     /**
-     * this method changes the local componnent state whenever
+     * this method changes the local component state whenever
      * the user changes the value of their username or password
      * in the input boxes
-     * @param  { string } changedFeild value (either username or password)
-     * that is being chnaged
+     * @param  { string } changedField value (either username or password)
+     * that is being changed
      * @param  { object } event event passed from onClick method
      */
-    updateUser(changedFeild,event){
-        /*loging the changes in the username and password
+    updateUser(changedField,event){
+        /*logging the changes in the username and password
           only needed for development*/
-        console.log(changedFeild + ': ' + event.target.value)
+        console.log(changedField + ': ' + event.target.value);
 
         // create new object so the local state is not mutated
-        const newUserInfo = Object.assign({}, this.state.user)
+        const newUserInfo = Object.assign({}, this.state.user);
 
         // assign new value to the duplicate state
-        newUserInfo[changedFeild] = event.target.value
+        newUserInfo[changedField] = event.target.value;
 
         // set local state to newUserInfo
         this.setState({
@@ -54,9 +54,9 @@ class LoginPage extends Component{
     login(event){
         event.preventDefault();
 
-        /*loging the value that will be passed to the dispatch function
+        /*logging the value that will be passed to the dispatch function
           only needed for development*/
-        console.log('Login:'+ JSON.stringify(this.state.user))
+        console.log('Login:'+ JSON.stringify(this.state.user));
 
         //dispatching the sendLoginRequest action
         this.props.sendLoginRequest(this.state.user.username, this.state.user.password)

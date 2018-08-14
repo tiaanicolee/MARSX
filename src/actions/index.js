@@ -4,7 +4,7 @@ import convert from 'xml-to-json-promise'
 export const SEND_LOGIN_REQUEST = 'send_login_request'
 export const LOGIN_REQUEST = 'login_request'
 export const LOGIN_SUCCESS = 'login_success'
-export const LOGIN_FAILURE = 'login_fauilure'
+export const LOGIN_FAILURE = 'login_failure'
 export const LOGOUT = 'logout'
 
 //const LOGIN_URL = 'https://app.geosamples.org/webservices/credentials_service_v2.php'
@@ -35,8 +35,6 @@ export function loginFailure(error) {
 }
 
 export function sendLoginRequest(username,password) {
-    //const request = axios.post(LOGIN_URL, {username: username, password: password})
-
     return (dispatch) => {
         dispatch(loginRequest())
         var form = new FormData()
