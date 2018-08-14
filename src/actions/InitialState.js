@@ -1,8 +1,7 @@
 export const InitialState = {
-    username: '',
-    password: '',
     usercode: '',
-    isRequestingLogin: false
+    isRequestingLogin: false,
+    isSuccessfulLogin: false
 
 }
 
