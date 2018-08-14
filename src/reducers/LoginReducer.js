@@ -1,22 +1,24 @@
 import { LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT } from '../actions'
 import InitialState from '../actions/InitialState'
 
+const newState = Object.assign({}, InitialState)
+
 export default function(state = InitialState, action){
     switch(action.type) {
         case LOGOUT:
             return InitialState
         case LOGIN_REQUEST:
-            const newStateRequest = Object.assign({}, InitialState)
-            newStateRequest.isRequestingLogin = true
-            return newStateRequest
+            newState.isRequestingLogin = true
+            return newState
         case LOGIN_SUCCESS:
-            const newStateUsercode = Object.assign({}, state)
-            newStateUsercode.usercode = action.usercode
+            newState.usercode = action.usercode
+            newState.isRequestingLogin = false
+            newState.isSuccessfulLogin = true
             console.log('====================')
             console.log("AUTHORIZATION SUCCESS")
-            console.log(newStateUsercode)
+            console.log(newState)
             console.log('====================')
-            return newStateUsercode
+            return newState
         case LOGIN_FAILURE:
             console.log('====================')
             console.log("AUTHORIZATION FAILURE")

@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { sendLoginRequest } from '../actions/index';
-import './LogingPage.css'
-//import axios from '../../node_modules/axios';
+import './LoginPage.css'
 
+
+/**
+ * this componnent allows the user to login with
+ * their GeoPass login
+ */
 class LoginPage extends Component{
     constructor(){
         super()
@@ -16,36 +20,46 @@ class LoginPage extends Component{
         }
        this.login = this.login.bind(this)
     }
-   
+
+    /**
+     * this method changes the local componnent state whenever
+     * the user changes the value of their username or password
+     * in the input boxes
+     * @param  { string } changedFeild value (either username or password)
+     * that is being chnaged
+     * @param  { object } event event passed from onClick method
+     */
     updateUser(changedFeild,event){
+        /*loging the changes in the username and password
+          only needed for development*/
         console.log(changedFeild + ': ' + event.target.value)
+
+        // create new object so the local state is not mutated
         const newUserInfo = Object.assign({}, this.state.user)
+
+        // assign new value to the duplicate state
         newUserInfo[changedFeild] = event.target.value
+
+        // set local state to newUserInfo
         this.setState({
             user: newUserInfo
-        })  
-        
-        
+        })
     }
 
+    /**
+     * this method dispatches a redux action in order to allow the
+     * user to login
+     * @param  {object} event event object passed from onClick method
+     */
     login(event){
         event.preventDefault();
+
+        /*loging the value that will be passed to the dispatch function
+          only needed for development*/
         console.log('Login:'+ JSON.stringify(this.state.user))
-        //this.props.sendLoginRequest(this.state.user.username, this.state.user.password)
-        /*axios({
-            method: 'post',
-            url: 'https://app.geosamples.org/webservices/credentials_service_v2.php',
-            data: {
-              username: this.state.user.username,
-              lastName: this.state.user.password
-            }
-        })
-        .then(function(response){
-            console.log(response)
-        })*/
+
+        //dispatching the sendLoginRequest action
         this.props.sendLoginRequest(this.state.user.username, this.state.user.password)
-
-
     }
 
     render(){
@@ -56,9 +70,17 @@ class LoginPage extends Component{
                         <div className="mid-div">
                             <h1>GeoPass Login</h1>
                             <form>
-                                <input onChange={this.updateUser.bind(this, 'username')} className="form-control" type="text" placeholder="email" />
+                                <input
+                                  onChange={this.updateUser.bind(this, 'username')}
+                                  className="form-control"
+                                  type="text"
+                                  placeholder="email" />
                                 <br/>
-                                <input onChange={this.updateUser.bind(this, 'password')} className="form-control" type="password" placeholder="password"/>
+                                <input
+                                  onChange={this.updateUser.bind(this, 'password')}
+                                  className="form-control"
+                                  type="password"
+                                  placeholder="password"/>
                                 <br/>
                                 <button onClick={this.login}>
                                     Start
@@ -72,7 +94,8 @@ class LoginPage extends Component{
     }
 }
 
+//this function allows us to dispatch redux actions we chose within this component
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({sendLoginRequest: sendLoginRequest}, dispatch)
   }
-  export default connect(null,mapDispatchToProps)(LoginPage);
+export default connect(null,mapDispatchToProps)(LoginPage);
