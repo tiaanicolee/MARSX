@@ -1,14 +1,23 @@
 import FormData from 'form-data'
 import fetch from 'isomorphic-fetch'
 import convert from 'xml-to-json-promise'
+
+// =================================================
+// CONSTANTS
+// =================================================
 export const SEND_LOGIN_REQUEST = 'send_login_request'
 export const LOGIN_REQUEST = 'login_request'
 export const LOGIN_SUCCESS = 'login_success'
 export const LOGIN_FAILURE = 'login_failure'
 export const LOGOUT = 'logout'
+// =================================================
+// END OF CONSTANTS
+// =================================================
 
-//const LOGIN_URL = 'https://app.geosamples.org/webservices/credentials_service_v2.php'
 
+// =================================================
+// LOGIN_PAGE ACTIONS
+// =================================================
 export function logout(){
     return{
         type: LOGOUT
@@ -62,3 +71,6 @@ function handleErrors(response) {
     if (!response.ok) throw Error(response.status)
     return response
   }
+  // =================================================
+  // END OF LOGIN_PAGE ACTIONS
+  // =================================================
