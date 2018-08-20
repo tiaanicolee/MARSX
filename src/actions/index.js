@@ -1,6 +1,7 @@
 import FormData from 'form-data'
 import fetch from 'isomorphic-fetch'
 import convert from 'xml-to-json-promise'
+//import history from '../history'
 
 // =================================================
 // CONSTANTS
@@ -10,6 +11,7 @@ export const LOGIN_REQUEST = 'login_request'
 export const LOGIN_SUCCESS = 'login_success'
 export const LOGIN_FAILURE = 'login_failure'
 export const LOGOUT = 'logout'
+export const LOGIN_PUSH = 'login_push'
 // =================================================
 // END OF CONSTANTS
 // =================================================
@@ -18,6 +20,7 @@ export const LOGOUT = 'logout'
 // =================================================
 // LOGIN_PAGE ACTIONS
 // =================================================
+
 export function logout(){
     return{
         type: LOGOUT
@@ -34,7 +37,7 @@ export function loginSuccess(usercode) {
       type: LOGIN_SUCCESS,
       usercode
     }
-  }
+}
 
 export function loginFailure(error) {
     return {
@@ -58,6 +61,7 @@ export function sendLoginRequest(username,password) {
           .then(usercode => {
             dispatch(loginSuccess(usercode))
             return usercode // return promise so that the submit handler knows to change routes on success
+
           })
           .catch(response => {
             if(response.message === '401')
@@ -65,6 +69,7 @@ export function sendLoginRequest(username,password) {
             else
               dispatch(loginFailure('Network connectivity error. Check your network connection.'))
           })
+
       }
 }
 function handleErrors(response) {
