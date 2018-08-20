@@ -5,19 +5,18 @@ import './index.css';
 
 // npm Imports
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { render } from 'react-dom';
 
-// Component Imports
-import LoginPage from './container_components/LoginPage'
+import App from './App'
 import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store';
 
+const store  = configureStore()
+window.store = store
 
-ReactDOM.render(
-    <Provider store={configureStore()}>
-        <LoginPage/>
-    </Provider>,
-     document.getElementById('root')
-);
+render(
+  <App store={ store }/>,
+  document.getElementById('root')
+)
+
 registerServiceWorker();

@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { sendLoginRequest } from '../actions/index';
+import { logout } from '../actions/index'
 import './LoginPage.css'
+import { Redirect } from 'react-router-dom'
+//import Navigation from '../presentational_components/Navigation'
 
 
 /**
@@ -10,8 +14,8 @@ import './LoginPage.css'
  * their GeoPass login
  */
 class LoginPage extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             user: {
                 username: '',
@@ -21,12 +25,15 @@ class LoginPage extends Component{
        this.login = this.login.bind(this)
     }
 
+    componentDidMount() {
+      console.log(this.props)
+    }
+
     /**
      * this method changes the local component state whenever
      * the user changes the value of their username or password
      * in the input boxes
-     * @param  { string } changedField value (either username or password)
-     * that is being changed
+     * @param  { string } changedField value (either username or password) that is being changed
      * @param  { object } event event passed from onClick method
      */
     updateUser(changedField,event){
@@ -56,14 +63,18 @@ class LoginPage extends Component{
 
         /*logging the value that will be passed to the dispatch function
           only needed for development*/
-        console.log('Login:'+ JSON.stringify(this.state.user));
+        console.log('Login:'+ JSON.stringify(this.state.user) + ' ' + this.props.isSuccessfulLogin);
+
 
         //dispatching the sendLoginRequest action
         this.props.sendLoginRequest(this.state.user.username, this.state.user.password)
+
     }
 
     render(){
-        return(
+      //  console.log(this.props)
+        return this.props.isSuccessfulLogin ? ( <Redirect  push to='/details'/> ) : (
+
             <div className="login">
                 <div className="container">
                     <div className="row">
@@ -95,7 +106,15 @@ class LoginPage extends Component{
 }
 
 //this function allows us to dispatch redux actions we chose within this component
+LoginPage.propTypes = {
+    isSuccessfulLogin: PropTypes.bool.isRequired
+}
+function mapStateToProps(state){
+  console.log(state.Login[0].isSuccessfulLogin)
+  return {isSuccessfulLogin: state.Login[0].isSuccessfulLogin}
+}
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({sendLoginRequest: sendLoginRequest}, dispatch)
+    return bindActionCreators({sendLoginRequest, logout }, dispatch)
   }
-export default connect(null,mapDispatchToProps)(LoginPage);
+
+export default connect(mapStateToProps,mapDispatchToProps)(LoginPage);
