@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
   navbarLinks() {
-    if (this.props.authenticated) {
     console.log('NavBar props:',this.props)
+
+    //Return different links depending on the authentication status
+    if (this.props.authenticated) {
       return [
         <li key="upload"><Link to="/upload">Upload</Link></li>,
         <li key="signout"><Link to="/signout">Sign out</Link></li>
@@ -13,7 +15,6 @@ class Navbar extends Component {
     }
     return [
       <li key="signin"><Link to="/signin">Sign in</Link></li>,
-      <li key="signup"><Link to="/signup">Sign up</Link></li>
     ];
   }
 
@@ -21,7 +22,7 @@ class Navbar extends Component {
     return (
       <nav className="navbar">
         <div className="container">
-          <Link to="/"><span className="brand">Auth-app</span></Link>
+          <Link to="/"><span className="brand">MarsX</span></Link>
           <ul>
             {this.navbarLinks()}
           </ul>

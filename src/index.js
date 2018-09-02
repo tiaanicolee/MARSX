@@ -20,8 +20,11 @@ import { AUTHENTICATED } from './actions';
 import reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
-const store = createStoreWithMiddleware(reducers)
+const store = createStoreWithMiddleware(reducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
+//Check cookies to see if user is already authenticated
+//and login user is already authenticated
 const usercode = localStorage.getItem('usercode');
 console.log('Cookies usercode:', usercode)
 

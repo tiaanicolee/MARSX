@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+/*This component redirects the user to Upload
+  if they are authenticated*/
 export default function (ComposedComponent) {
   class NotAuthentication extends Component {
     componentWillMount() {
