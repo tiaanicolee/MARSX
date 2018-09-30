@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {signOutAction} from '../actions'
+import './SignOut.css'
 
 class SignOut extends Component {
 
@@ -10,7 +11,7 @@ class SignOut extends Component {
 
   render(){
     return(
-      <div>
+      <div className="signout">
         <button
           className="btn btn-danger"
           onClick={() => this.signOut()}>

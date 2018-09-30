@@ -19,6 +19,7 @@ export function signInAction({ username, password }, history) {
       //Formating api response in order to get usercode
       let options = {ignoreComment: true, alwaysChildren: true};
       let resJSON = await convert.xml2js(res.data, options )
+      console.log(resJSON)
       let usercode = resJSON.elements[0].elements[1].elements[0].elements[0].text
 
       dispatch({ type: AUTHENTICATED });

@@ -13,7 +13,11 @@ import SignIn from './components/SignIn';
 import Upload from './components/Upload';
 import HomePage from './components/HomePage';
 import SignOut from './components/SignOut';
-import Navbar from './components/NavBar';
+import Details from './components/Details'
+import Header from './components/NavBar';
+
+//CSS
+//import 'bootstrap/dist/css/bootstrap.css';
 
 //Actions and Reducers
 import { AUTHENTICATED } from './actions';
@@ -38,9 +42,10 @@ ReactDOM.render(
   <Provider store={store}>
    <Router>
      <div>
-       <Navbar />
+       <Header/>
        <Route exact path="/" component={HomePage} />
        <Route path="/signin" component={noRequireAuth(SignIn)} />
+       <Route path="/details" component={requireAuth(Details)} />
        <Route path="/signout" component={requireAuth(SignOut)} />
        <Route path="/upload" component={requireAuth(Upload)} />
      </div>

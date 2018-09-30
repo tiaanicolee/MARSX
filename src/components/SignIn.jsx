@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { signInAction } from '../actions';
 import { connect } from 'react-redux'
+import './SignIn.css'
 
 class SignIn extends Component {
   submit = (values) => {
