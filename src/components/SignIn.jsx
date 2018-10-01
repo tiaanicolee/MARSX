@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Form ,Field, reduxForm } from 'redux-form/immutable';
 import { signInAction } from '../actions';
 import { connect } from 'react-redux'
-import './SignIn.css'
+import './css/SignIn.css'
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
 <div>
@@ -13,6 +13,7 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
     {touched && error && <span>{error}</span>}
   </div>
 </div>)
+
 class SignIn extends Component {
   submit = (values) => {
     console.log(values)

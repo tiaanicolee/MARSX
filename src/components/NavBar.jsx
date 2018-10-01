@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
-import './NavBar.css';
+import './css/NavBar.css';
 
 class Header extends Component {
   navbarLinks() {

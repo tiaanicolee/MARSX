@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {signOutAction} from '../actions'
-import './SignOut.css'
+import './css/SignOut.css'
 
 class SignOut extends Component {
 

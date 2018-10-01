@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './css/details.css'
+import { Button, ButtonToolbar } from 'react-bootstrap'
 
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
@@ -105,23 +107,35 @@ class Details extends Component {
 
     render() {
         return (
-          <div
-            className="ag-theme-balham"
-            style={{
-	           height: '500px',
-	           width: '600px' ,
-             margin: 'auto'}}
-		           >
-                 <button onClick={this.onButtonClick}>Open Sample Page</button>
-                  <AgGridReact
-                        onGridReady={ params => this.gridApi = params.api }
-                        rowSelection="multiple"
-                        enableSorting={true}
-                        enableFilter={true}
-                        columnDefs={this.state.columnDefs}
-                        rowData={this.state.rowData}>
-                  </AgGridReact>
+          <div>
+            <div
+              className="ag-theme-balham"
+              style={{
+  	           height: '600px',
+  	           width: '90%' ,
+               margin: 'auto'}}
+  		           >
+                   <ButtonToolbar className="openProfile">
+                     <Button
+                       bsStyle="primary"
+                       bsSize="large"
+
+                       onClick={this.onButtonClick}>
+                       Open Sample Page
+                     </Button>
+                   </ButtonToolbar>
+
+                    <AgGridReact
+                          onGridReady={ params => this.gridApi = params.api }
+                          rowSelection="multiple"
+                          enableSorting={true}
+                          enableFilter={true}
+                          columnDefs={this.state.columnDefs}
+                          rowData={this.state.rowData}>
+                    </AgGridReact>
+            </div>
           </div>
+
             );
     }
 }
