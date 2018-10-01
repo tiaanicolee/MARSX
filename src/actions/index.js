@@ -1,81 +1,43 @@
-import FormData from 'form-data'
-import fetch from 'isomorphic-fetch'
-import convert from 'xml-to-json-promise'
-//import history from '../history'
+import axios from 'axios';
+import convert from 'xml-js'
 
-// =================================================
-// CONSTANTS
-// =================================================
-export const SEND_LOGIN_REQUEST = 'send_login_request'
-export const LOGIN_REQUEST = 'login_request'
-export const LOGIN_SUCCESS = 'login_success'
-export const LOGIN_FAILURE = 'login_failure'
-export const LOGOUT = 'logout'
-export const LOGIN_PUSH = 'login_push'
-// =================================================
-// END OF CONSTANTS
-// =================================================
+//Constants
+export const AUTHENTICATED = 'authenticated_user';
+export const UNAUTHENTICATED = 'unauthenticated_user';
+export const AUTHENTICATION_ERROR = 'authentication_error';
 
+const URL = 'https://sesardev.geosamples.org/webservices/credentials_service_v2.php';
 
-// =================================================
-// LOGIN_PAGE ACTIONS
-// =================================================
+export function signInAction({ username, password }, history) {
+  return async (dispatch) => {
+    try {
+      const formData = new FormData()
+      formData.append('username', username)
+      formData.append('password', password)
+      const res = await axios.post(`${URL}`, formData);
 
-export function logout(){
-    return{
-        type: LOGOUT
+      //Formating api response in order to get usercode
+      let options = {ignoreComment: true, alwaysChildren: true};
+      let resJSON = await convert.xml2js(res.data, options )
+      console.log(resJSON)
+      let usercode = resJSON.elements[0].elements[1].elements[0].elements[0].text
+
+      dispatch({ type: AUTHENTICATED });
+      localStorage.setItem('usercode', usercode);
+      history.push('/upload');
+    } catch(error) {
+      console.log(error)
+      dispatch({
+        type: AUTHENTICATION_ERROR,
+        payload: 'Invalid email or password'
+      });
     }
-}
-export function loginRequest() {
-    return {
-      type: LOGIN_REQUEST
-    }
-}
+  };
+};
 
-export function loginSuccess(usercode) {
-    return {
-      type: LOGIN_SUCCESS,
-      usercode
-    }
-}
-
-export function loginFailure(error) {
-    return {
-      type: LOGIN_FAILURE,
-      error
-    }
-}
-
-export function sendLoginRequest(username,password) {
-    return (dispatch) => {
-        dispatch(loginRequest())
-        var form = new FormData()
-        form.append('username', username)
-        form.append('password', password)
-        var request = {method: 'POST', body: form}
-        return fetch('https://sesardev.geosamples.org/webservices/credentials_service_v2.php', request)
-          .then(handleErrors)
-          .then(response => response.text())
-          .then(responseText => convert.xmlDataToJSON(responseText, {explicitArray: false}))
-          .then(responseJson => responseJson.results.user_codes.user_code)
-          .then(usercode => {
-            dispatch(loginSuccess(usercode))
-            return usercode // return promise so that the submit handler knows to change routes on success
-
-          })
-          .catch(response => {
-            if(response.message === '401')
-              dispatch(loginFailure('Your username and password do not match a GeoPass account.'))
-            else
-              dispatch(loginFailure('Network connectivity error. Check your network connection.'))
-          })
-
-      }
-}
-function handleErrors(response) {
-    if (!response.ok) throw Error(response.status)
-    return response
+export function signOutAction(){
+  localStorage.clear();
+  return {
+    type: UNAUTHENTICATED
   }
-  // =================================================
-  // END OF LOGIN_PAGE ACTIONS
-  // =================================================
+}
