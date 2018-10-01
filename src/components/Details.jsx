@@ -38,8 +38,14 @@ class Details extends Component {
   }
 
   onButtonClick(e){
-      console.log(this.gridApi.getSelectedNodes() )
-      console.log(this.gridApi.getSelectedNodes()[0].data.IGSN)
+      const length = this.gridApi.getSelectedNodes().length
+      console.log(length)
+      for (var i = 0; i < length; i++){
+        console.log(i)
+        let igsn = this.gridApi.getSelectedNodes()[i].data.IGSN
+        console.log(igsn)
+        window.open(`https://sesardev.geosamples.org/sample/igsn/${igsn}`)
+      }
   }
   sendRequest(num){
 
@@ -99,23 +105,23 @@ class Details extends Component {
 
     render() {
         return (
-                <div
-                  className="ag-theme-balham"
-                  style={{
-	                height: '500px',
-	                width: '600px' ,
-                  margin: 'auto'}}
-		            >
-                   <button onClick={this.onButtonClick}>Get selected rows</button>
-                    <AgGridReact
+          <div
+            className="ag-theme-balham"
+            style={{
+	           height: '500px',
+	           width: '600px' ,
+             margin: 'auto'}}
+		           >
+                 <button onClick={this.onButtonClick}>Open Sample Page</button>
+                  <AgGridReact
                         onGridReady={ params => this.gridApi = params.api }
                         rowSelection="multiple"
                         enableSorting={true}
                         enableFilter={true}
                         columnDefs={this.state.columnDefs}
                         rowData={this.state.rowData}>
-                    </AgGridReact>
-                </div>
+                  </AgGridReact>
+          </div>
             );
     }
 }

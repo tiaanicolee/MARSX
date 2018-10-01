@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+
+import { Form ,Field, reduxForm } from 'redux-form/immutable';
 import { signInAction } from '../actions';
 import { connect } from 'react-redux'
 import './SignIn.css'
 
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+<div>
+  <label>{label}</label>
+  <div>
+    <input {...input} style={{color: 'black'}}placeholder={label} type={type}/>
+    {touched && error && <span>{error}</span>}
+  </div>
+</div>)
 class SignIn extends Component {
   submit = (values) => {
     console.log(values)
@@ -20,20 +29,30 @@ class SignIn extends Component {
     }
   }
 
+  renderPassword () {
+  return (
+    <div >
+      <input/>
+      <input/>
+    </div>
+  );
+}
+
+
   render() {
     const { handleSubmit } = this.props
     return (
       <div className="form">
         <div className="container">
           <h2>GeoPass Login</h2>
-          <form onSubmit={ handleSubmit(this.submit)}>
+          <Form onSubmit={ handleSubmit(this.submit)}>
             <Field name="username"
-                   component="input"
+                   component={renderField}
                    type="text"
                    placeholder="username"
             />
             <Field name="password"
-                   component="input"
+                   component={renderField}
                    type="password"
                    placeholder="password"
             />
@@ -43,7 +62,7 @@ class SignIn extends Component {
               >
                 Login
               </button>
-          </form>
+          </Form>
             {this.errorMessage()}
         </div>
       </div>
