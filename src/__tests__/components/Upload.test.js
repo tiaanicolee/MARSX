@@ -1,5 +1,5 @@
 import React from 'react';
-import Upload from '../components/Upload';
+import Upload from '../../components/Upload';
 import renderer from 'react-test-renderer';
 import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
