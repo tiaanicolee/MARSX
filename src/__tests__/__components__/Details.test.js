@@ -19,10 +19,10 @@ jest.mock('axios', () => {
                 return Promise.resolve({
                     data: {
                         sample: {
-                            name: "",
-                            latitude: "",
-                            longitude: "",
-                            elevation: ""
+                            name: "name",
+                            latitude: "latitude",
+                            longitude: "longitude",
+                            elevation: "elevation"
                         }
                     }
                 });
@@ -39,23 +39,28 @@ describe('<Details />', () => {
     let wrapper;
     let instance;
 
-    beforeEach(() => {
-        localStorage.setItem('usercode', 'usercode')
-        wrapper = shallow(<Details />);
-        instance = wrapper.instance();
+    describe('render', () => {
+        it('should render Details', () => {
+            localStorage.setItem('usercode', 'usercode')
+            wrapper = shallow(<Details />);
+            instance = wrapper.instance();
+            expect(wrapper).toBeTruthy();
+        });
     });
-
-    it('should render Details', () => {
-        localStorage.setItem('usercode', 'usercode')
-        wrapper = shallow(<Details />);
-        instance = wrapper.instance();
-        expect(wrapper).toBeTruthy();
-    });
-
-    it('should reject the axios call', () => {
-        localStorage.setItem('usercode', null)
-        wrapper = shallow(<Details />);
-        instance = wrapper.instance();
-        expect(wrapper).toBeTruthy();
+    
+    describe('sendRequest', () => {
+        it('should get igsn and pertinent information', () => {
+            localStorage.setItem('usercode', 'usercode')
+            wrapper = shallow(<Details />);
+            instance = wrapper.instance();
+            expect(wrapper).toBeTruthy();   //TODO: make expect more descriptive
+        });
+    
+        it('should reject the axios call', () => {
+            localStorage.setItem('usercode', null)
+            wrapper = shallow(<Details />);
+            instance = wrapper.instance();
+            expect(wrapper).toBeTruthy();   //TODO: make expect more descriptive
+        });
     });
 });
