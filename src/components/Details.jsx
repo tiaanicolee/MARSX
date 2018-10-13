@@ -25,30 +25,31 @@ class Details extends Component {
       sortingFlag: 0,
       sortSampleNamesFlag: false,
       usercode: localStorage.getItem('usercode')
-      }
+    }
 
     /*  this.handleClickNext = this.handleClickNext.bind(this)
       this.handleClickPrev = this.handleClickPrev.bind(this)
       this.changeLimit = this.changeLimit.bind(this)*/
-      this.sendRequest = this.sendRequest.bind(this)
+    this.sendRequest = this.sendRequest.bind(this)
     //  this.sampleSort = this.sampleSort.bind(this)
     this.onButtonClick = this.onButtonClick.bind(this)
-    }
+  }
 
-    componentDidMount(){
+  componentDidMount() {
     this.sendRequest(0)
   }
 
   onButtonClick(e){
-      const length = this.gridApi.getSelectedNodes().length
-      console.log(length)
-      for (var i = 0; i < length; i++){
-        console.log(i)
-        let igsn = this.gridApi.getSelectedNodes()[i].data.IGSN
-        console.log(igsn)
-        window.open(`https://sesardev.geosamples.org/sample/igsn/${igsn}`)
-      }
+    const length = this.gridApi.getSelectedNodes().length
+    console.log(length)
+    for (var i = 0; i < length; i++){
+      console.log(i)
+      let igsn = this.gridApi.getSelectedNodes()[i].data.IGSN
+      console.log(igsn)
+      window.open(`https://sesardev.geosamples.org/sample/igsn/${igsn}`)
+    }
   }
+  
   sendRequest(num){
 
     //Reset state everytime new information needs to be put into state
@@ -92,7 +93,6 @@ class Details extends Component {
         })
       });
     })
-
     //Throw an error if the GET request don't come through
     .catch(error => {
       console.log(error)
@@ -105,39 +105,38 @@ class Details extends Component {
     });
   }
 
-    render() {
-        return (
-          <div>
-            <div
-              className="ag-theme-balham"
-              style={{
-  	           height: '600px',
-  	           width: '90%' ,
-               margin: 'auto'}}
-  		           >
-                   <ButtonToolbar className="openProfile">
-                     <Button
-                       bsStyle="primary"
-                       bsSize="large"
+  render() {
+    return (
+      <div>
+        <div
+          className="ag-theme-balham"
+          style={{
+            height: '600px',
+            width: '90%' ,
+            margin: 'auto'
+          }}
+        >
+          <ButtonToolbar className="openProfile">
+            <Button
+              bsStyle="primary"
+              bsSize="large"
+              onClick={this.onButtonClick}>
+              Open Sample Page
+            </Button>
+          </ButtonToolbar>
 
-                       onClick={this.onButtonClick}>
-                       Open Sample Page
-                     </Button>
-                   </ButtonToolbar>
-
-                    <AgGridReact
-                          onGridReady={ params => this.gridApi = params.api }
-                          rowSelection="multiple"
-                          enableSorting={true}
-                          enableFilter={true}
-                          columnDefs={this.state.columnDefs}
-                          rowData={this.state.rowData}>
-                    </AgGridReact>
-            </div>
-          </div>
-
-            );
-    }
+          <AgGridReact
+            onGridReady={ params => this.gridApi = params.api }
+            rowSelection="multiple"
+            enableSorting={true}
+            enableFilter={true}
+            columnDefs={this.state.columnDefs}
+            rowData={this.state.rowData}>
+          </AgGridReact>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Details;
