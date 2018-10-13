@@ -7,6 +7,11 @@
   color: white;
 }
 
+.navbar-brand {
+  align-items: center;
+  padding: 5px;
+}
+
 .links{
   padding: 5px;
   font-size: 20px;
@@ -16,5 +21,10 @@
   font-size: 20px !important;
   margin:auto !important;
   padding: 5px !important;
+}
 
+img {
+  height: 35px;
+  margin-right: 0px;
+  margin-bottom: 0px;
 }

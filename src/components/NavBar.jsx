@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import marsLogo from '../images/MarsLogoSansBg.png'
 
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import './css/NavBar.css';
@@ -9,8 +10,7 @@ class Header extends Component {
     console.log('NavBar props:',this.props)
 
     //Return different links depending on the authentication status
-    if (this.props.authenticated) {
-      return(
+    return this.props.authenticated ?
         <div>
           <Nav>
             <NavItem eventKey={1} href="details">Details</NavItem>
@@ -20,13 +20,10 @@ class Header extends Component {
             <NavItem eventKey={3} href="signout">Sign Out</NavItem>
           </Nav>
         </div>
-      );
-    }
-    return (
+    :
       <Nav pullRight>
         <NavItem eventKey={4} href="signin">Sign In</NavItem>
       </Nav>
-    );
   }
 
   render() {
@@ -34,9 +31,12 @@ class Header extends Component {
       <Navbar inverse className="nav">
         <Navbar.Header>
           <Navbar.Brand >
-            <a href="/">MARS</a>
+            <img src={marsLogo} />
           </Navbar.Brand>
         </Navbar.Header>
+        <Nav>
+          <NavItem href="/">MARS</NavItem>
+        </Nav>     
         {this.navbarLinks()}
       </Navbar>
     );
